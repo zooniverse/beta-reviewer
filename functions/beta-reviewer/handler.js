@@ -42,11 +42,8 @@ module.exports = (context, callback) => {
       };
 
       const missingPages = REQUIRED_PAGES.reduce((accumulator, requiredPage) => {
-        const pageExists = pages.find(function (page) {
-          console.log(page.url_key)
-          return page.url_key === requiredPage
-        });
-        // console.log(pages)
+        const pageExists = pages.find(page => page.url_key === requiredPage);
+
         if (!pageExists || (pageExists.content === null || pageExists.content === '')) {
           accumulator.push(requiredPage);
         }
@@ -56,9 +53,12 @@ module.exports = (context, callback) => {
 
       responseObject.pages = {
         pass: missingPages.length === 0,
-        payload: missingPages,
       }
 
-      console.log(responseObject);
+      if (!responseObject.pages.pass) {
+        responseObject.pages.payload = missingPages;
+      }
+
+      callback(null, responseObject);
     })
 }

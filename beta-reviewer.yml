@@ -6,4 +6,4 @@ functions:
   beta-reviewer:
     lang: node
     handler: ./functions/beta-reviewer
-    image: zooniverse/beta-reviewer
+    image: beta-reviewer
